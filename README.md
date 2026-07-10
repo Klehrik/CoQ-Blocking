@@ -1,4 +1,4 @@
-<img width="512" height="512" alt="blocking" src="https://github.com/user-attachments/assets/1dee887d-7f21-446d-be00-551bc865c90a" />
+<img width="128" height="128" alt="blocking" src="https://github.com/user-attachments/assets/1dee887d-7f21-446d-be00-551bc865c90a" />
 
 # Blocking (item mod)
 Adds a new item mod for melee weapons that allows them to function as shields.  
