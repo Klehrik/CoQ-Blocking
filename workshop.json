@@ -1,0 +1,8 @@
+{
+  "WorkshopId": 3762090177,
+  "Title": "Blocking (item mod)",
+  "Description": "Adds a new item mod for melee weapons that allows them to function as shields.\nShield Slam and Shield Wall cannot be used through blocking weapons.",
+  "Tags": "Stable,Item Mod,Script,Weapon",
+  "Visibility": "0",
+  "ImagePath": "preview.png"
+}
