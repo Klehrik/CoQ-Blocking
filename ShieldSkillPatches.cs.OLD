@@ -1,0 +1,94 @@
+// These patches are prefix only, but have some issues so they are unused
+
+using System;
+using HarmonyLib;
+using XRL.World;
+using XRL.World.Parts;
+using Skill = XRL.World.Parts.Skill;
+using Effects = XRL.World.Effects;
+
+// Each patch has an issue where if you have both a blocking weapon
+// and a shield equipped, the blocking weapon will be stated as
+// the one used if it has a higher AV, but fixing these require
+// transpiler patches which I don't want to do.
+
+namespace Klehrik_Blocking
+{
+    public class ShieldCheck
+    {
+        public static bool IsNotPassiveOnly(GameObject Shield)
+        {
+            if (Shield.GetPart<Klehrik_ShieldPassiveOnly>() != null)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(Skill.Shield_Slam))]
+    public class ShieldSlamSkill
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Skill.Shield_Slam.PerformShieldSlam))]
+        static bool SkillUse(Skill.Shield_Slam __instance, ref bool __result)
+        {
+            GameObject shieldWithHighestAV = __instance.ParentObject.GetShieldWithHighestAV(ShieldCheck.IsNotPassiveOnly);
+            if (shieldWithHighestAV == null)
+            {
+                __result = __instance.ParentObject.Fail("You must have a shield equipped to perform a shield slam.");
+                return false;
+            }
+            return true;
+        }
+
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Skill.Shield_Slam.FireEvent))]
+        static bool ChargeFreeSlam(Skill.Shield_Slam __instance, ref bool __result, Event E)
+        {
+            if (E.ID == "ChargedTarget")
+            {
+                GameObject shieldWithHighestAV = __instance.ParentObject.GetShieldWithHighestAV(ShieldCheck.IsNotPassiveOnly);
+			    if (shieldWithHighestAV == null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(Skill.Shield_ShieldWall))]
+    public class ShieldWallSkill
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Skill.Shield_ShieldWall.HandleEvent), new Type[] { typeof(CommandEvent) })]
+        static bool Prefix(Skill.Shield_ShieldWall __instance, ref bool __result, CommandEvent E)
+        {
+            if (E.Command == "CommandShieldWall")
+            {
+                GameObject shield = __instance.ParentObject.GetShield(ShieldCheck.IsNotPassiveOnly);
+                if (shield == null)
+                {
+                    __result = __instance.ParentObject.Fail("You have no shield to raise.");
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(Effects.ShieldWall))]
+    public class ShieldWallEffect
+    {
+        [HarmonyPrefix]
+        [HarmonyPatch(nameof(Effects.ShieldWall.HandleEvent), new Type[] { typeof(EndTurnEvent) })]
+        static void Prefix(Effects.ShieldWall __instance, ref bool __result, EndTurnEvent E)
+        {
+            if (__instance.Object.GetShield(ShieldCheck.IsNotPassiveOnly) == null)
+            {
+                __instance.Object.RemoveEffect(__instance);
+            }
+        }
+    }
+}

@@ -1,0 +1,3 @@
+<mods>
+    <mod Part="Klehrik_ModBlocking" Tables="WeaponMods" Rarity="U" TinkerTier="2" CanAutoTinker="false" NoSparkingQuest="true" TinkerDisplayName="blocking" Value="1.2" TinkerCategory="melee weapons" />
+</mods>
