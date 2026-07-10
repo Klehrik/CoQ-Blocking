@@ -38,7 +38,7 @@ namespace XRL.World.Parts
         {
             if (E.Understood() && !E.Object.HasProperName)
             {
-                E.AddAdjective("{{c|blocking}}");
+                E.AddAdjective("{{c|blocking}}", 20);
             }
             return base.HandleEvent(E);
         }
