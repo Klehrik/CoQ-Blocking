@@ -4,6 +4,8 @@
 Adds a new item mod for melee weapons that allows them to function as shields.  
 Shield Slam and Shield Wall cannot be used with blocking weapons.
 
+I was originally going to add parrying daggers but figured it would be better as a general mod you can put on any weapon.
+
 ## AV ◆
 is calculated as:  
 `1 + floor(Tier / 2.2)`
