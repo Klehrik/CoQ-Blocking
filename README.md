@@ -1,6 +1,6 @@
 <img width="256" height="256" alt="blocking" src="https://github.com/user-attachments/assets/1dee887d-7f21-446d-be00-551bc865c90a" />
 
-# Blocking (item mod)
+# [Blocking (item mod)](https://steamcommunity.com/sharedfiles/filedetails/?id=3762090177)
 Adds a new item mod for melee weapons that allows them to function as shields.  
 Shield Slam and Shield Wall cannot be used with blocking weapons.
 
