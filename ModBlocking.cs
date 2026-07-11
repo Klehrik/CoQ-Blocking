@@ -23,7 +23,7 @@ namespace XRL.World.Parts
         public override void ApplyModification(GameObject Object)
         {
             Shield p = Object.AddPart<Shield>();
-            p.AV = 1 + (int)Math.Floor(Tier / 2.2f);
+            p.AV = GetBlockValue(Tier);
             p.WornOn = Object.GetPart<MeleeWeapon>().Slot;
 
             Object.AddPart<Klehrik_ShieldPassiveOnly>();
@@ -45,8 +45,18 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
-            E.Postfix.AppendRules("Blocking: This weapon can function as a shield (excluding activated abilities).");
+            E.Postfix.AppendRules(GetDescription(Tier));
             return base.HandleEvent(E);
+        }
+
+        public static string GetDescription(int Tier)
+        {
+            return "Blocking: This weapon can function as a " + GetBlockValue(Tier) + " AV shield (excluding activated abilities).";
+        }
+
+        public static int GetBlockValue(int Tier)
+        {
+            return 1 + (int)Math.Floor(Tier / 2.2f);
         }
     }
 }

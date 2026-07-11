@@ -2,7 +2,7 @@
     "id": "Klehrik_Blocking",
     "title": "Blocking (item mod)",
     "description": "Adds a new item mod for melee weapons that allows them to function as shields (excluding activated abilities).",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "Klehrik",
     "tags": "Stable",
     "PreviewImage": "preview.png"
