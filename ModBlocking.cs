@@ -45,18 +45,23 @@ namespace XRL.World.Parts
 
         public override bool HandleEvent(GetShortDescriptionEvent E)
         {
-            E.Postfix.AppendRules(GetDescription(Tier));
+            E.Postfix.AppendRules(GetInstanceDescription());
             return base.HandleEvent(E);
-        }
-
-        public static string GetDescription(int Tier)
-        {
-            return "Blocking: This weapon can function as a " + GetBlockValue(Tier) + " AV shield (excluding activated abilities).";
         }
 
         public static int GetBlockValue(int Tier)
         {
             return 1 + (int)Math.Floor(Tier / 2.2f);
+        }
+
+        public static string GetDescription(int Tier)
+        {
+            return "Blocking: This weapon can function as a " + ((Tier > 0) ? (GetBlockValue(Tier) + " AV ") : "") + "shield (excluding activated abilities).";
+        }
+
+        public string GetInstanceDescription()
+        {
+            return "Blocking: This weapon can function as a " + GetBlockValue(Tier) + " AV shield (excluding activated abilities).";
         }
     }
 }
