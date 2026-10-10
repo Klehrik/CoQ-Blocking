@@ -2,7 +2,7 @@
 
 # [Blocking (item mod)](https://steamcommunity.com/sharedfiles/filedetails/?id=3762090177)
 Adds a new item mod for melee weapons that allows them to function as shields.  
-Activated abilities (Shield Slam and Shield Wall) cannot be used with one-handed blocking weapons.  
+Activated abilities (Shield Slam and Shield Wall) *cannot* be used with *one-handed* blocking weapons.  
 
 I was originally going to add parrying daggers but figured it would be better as a general mod you can put on any weapon.
 
