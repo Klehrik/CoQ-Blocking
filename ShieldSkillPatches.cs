@@ -12,13 +12,44 @@ namespace Klehrik_Blocking
 {
     public class ShieldCheck
     {
+        public static GameObject actor;
+
         public static bool IsNotPassiveOnly(GameObject Shield)
         {
-            if (Shield.GetPart<Klehrik_ShieldPassiveOnly>() != null)
+            if (Shield.GetPart<Klehrik_ShieldPassiveOnly>() == null
+             || Shield.GetSlotsRequiredFor(actor, Shield.GetPart<Shield>().WornOn, FloorAtOne: false) > 1)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(GameObject), nameof(GameObject.GetShield))]
+    public class GOGetShield
+    {
+        static void Prefix(GameObject __instance)
+        {
+            ShieldCheck.actor = __instance;
+        }
+
+        static void Postfix()
+        {
+            ShieldCheck.actor = null;
+        }
+    }
+
+    [HarmonyPatch(typeof(GameObject), nameof(GameObject.GetShieldWithHighestAV))]
+    public class GOGetShieldWithHighestAV
+    {
+        static void Prefix(GameObject __instance)
+        {
+            ShieldCheck.actor = __instance;
+        }
+
+        static void Postfix()
+        {
+            ShieldCheck.actor = null;
         }
     }
 
@@ -85,7 +116,6 @@ namespace Klehrik_Blocking
     [HarmonyPatch(typeof(Effects.ShieldWall))]
     public class ShieldWallEffect
     {
-        [HarmonyPrefix]
         [HarmonyPatch(nameof(Effects.ShieldWall.HandleEvent), new Type[] { typeof(EndTurnEvent) })]
         static void Prefix(Effects.ShieldWall __instance, ref bool __result, EndTurnEvent E)
         {

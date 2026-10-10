@@ -56,12 +56,12 @@ namespace XRL.World.Parts
 
         public static string GetDescription(int Tier)
         {
-            return "Blocking: This weapon can function as a " + ((Tier > 0) ? (GetBlockValue(Tier) + " AV ") : "") + "shield (excluding activated abilities).";
+            return "Blocking: This weapon can function as a " + ((Tier > 0) ? (GetBlockValue(Tier) + " AV ") : "") + "shield (excluding activated abilities for one-handed weapons).";
         }
 
         public string GetInstanceDescription()
         {
-            return "Blocking: This weapon can function as a " + GetBlockValue(Tier) + " AV shield (excluding activated abilities).";
+            return "Blocking: This weapon can function as a " + GetBlockValue(Tier) + " AV shield (excluding activated abilities for one-handed weapons).";
         }
     }
 }
